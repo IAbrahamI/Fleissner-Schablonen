@@ -2,29 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Fleissner-Schablone</title>
 </head>
 <body>
     <div>
-        <canvas id="canvas" width="420" height="420" style="border:1px solid #c3c3c3;"></canvas>
+        <canvas id="canvas" width="600" height="600" style="border:1px solid #c3c3c3;"></canvas>
     </div>
-
-
-    <script>
-        var canvas = document.getElementById("canvas");
-        var ctx = canvas.getContext("2d");
-        var x = 0;
-        var y = 0;
-        for(var i=1; i<8;i++){
-            for(var j=1;j<8;j++){
-                ctx.strokeRect(x,y,60,60);
-                x+=60;
-                if(j==7){
-                    x=0;
-                    y+=60;
-                }
-            }
-        }
-    </script>
+    <script src="Brett.js"></script>
 </body>
 </html>
