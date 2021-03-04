@@ -4,10 +4,11 @@ ctx.font = "30px Arial";
 let x = 0;
 let y = 0;
 let textInput=[];
-var hasStarted=false;
+let hasStarted = false;
+
 //------------------------------------------------------------
 function saveValue(){
-    const inputValue = document.getElementById('input').value
+    const inputValue = document.getElementById('input').value;
     textInput = Array.from(inputValue);
     hasStarted=true;
 }
@@ -22,13 +23,17 @@ for(let l=0; l<amountOfRds; l++){
 let xRect = 0;
 let yRect = 0;
 var valueOfLetter = 0;
+
 for(let k=0;k<valueRect.length;k++){
     const brect = valueRect[k];
+    console.log(brect);
     if(brect===0 || brect===1 || brect===2){
         ctx.fillRect(xRect,yRect,60,60);
-    } else if(brect===3 && hasStarted===true){
+    }
+    if(brect===3 && hasStarted===true){
         //console.log(textInput[valueOfLetter]);
-        // ctx.fillText(textInput[valueOfLetter],xRect+20,yRect+40);
+        ctx.fillText("iufbusdzibfuszdbaiuzfb",500,500);
+         ctx.fillText(textInput[valueOfLetter],xRect+20,yRect+40);
         valueOfLetter++;
     }
     xRect+=60;
@@ -38,11 +43,10 @@ for(let k=0;k<valueRect.length;k++){
     }
 }
 //------------------------------------------------------------
-// Methode zum Zeichnen des Textes
+// Methode zum Zeichnen des Bretts
 for(let i=0; i<8; i++){
     for(let j=0; j<8; j++){
         ctx.strokeRect(x,y,60,60);
-        ctx.fillText("0",x+22,y+40);
         x+=60;
         if(j===7){
             x=0;
