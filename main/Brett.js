@@ -14,26 +14,17 @@ for(let l=0; l<amountOfRds; l++){
     valueRect.push(randomNumber);
 }
 //------------------------------------------------------------
-let xRect = 0;
-let yRect = 0;
-for(let k=0;k<valueRect.length;k++){
-    const brect = valueRect[k];
-    if(brect===0 || brect===1 || brect===2){
-        ctx.fillRect(xRect,yRect,60,60);
-    }else if(brect===3){
-        listOfWhite.push(k);
-    }
-    xRect+=60;
-    if(k===7 || k===15 || k===23 || k===31 || k===39 || k===47 || k===55 || k===63){
-        xRect=0;
-        yRect+=60;
-    }
-}
-//------------------------------------------------------------
-// Methode zum Zeichnen des Bretts
+// Methode zum Zeichnen des Bretts mit schwarze Rechtecke
+let amountOfrect = 0;
 for(let i=0; i<8; i++){
     for(let j=0; j<8; j++){
         ctx.strokeRect(x,y,60,60);
+        if(valueRect[amountOfrect]===0 || valueRect[amountOfrect]===1 || valueRect[amountOfrect]===2){
+            ctx.fillRect(x,y,60,60);
+        } else if(valueRect[amountOfrect]===3){
+            listOfWhite.push(amountOfrect);
+        }
+        amountOfrect++;
         x+=60;
         if(j===7){
             x=0;
@@ -42,6 +33,7 @@ for(let i=0; i<8; i++){
     }
 }
 //------------------------------------------------------------
+// Button Funktion --Zeichnet alle Buchstaben
 function saveValue(){
     const inputValue = document.getElementById('input').value;
     textInput = Array.from(inputValue);
