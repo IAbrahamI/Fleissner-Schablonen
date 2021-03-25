@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d");
 ctx.font = "30px Arial";
 let x = 0;
 let y = 0;
-let width = 0;
+let width = 4;
 let counter = 0;
 let textInput=[];
 let listOfWhite=[];
@@ -22,14 +22,10 @@ function addRandomValues(){
 // Speichert und zeichnet alle Buchstaben
 function saveValues(){
     const inputValue = document.getElementById('textInput').value;
-    const valueForWidth = document.querySelectorAll('input[name="width"]');
-    for (const radioB of valueForWidth) {
-        if(radioB.checked){
-            width = radioB.value;
-            break;
-        }
-    }
     textInput = Array.from(inputValue);
+    if(textInput.length>(width*4)){
+        width = width+2;
+    }
     addRandomValues();
     for(let i=0; i<width; i++){
         for(let j=0; j<width; j++){
@@ -59,3 +55,5 @@ function saveValues(){
     }
 }
 //------------------------------------------------------------
+function rotateCanvas(){
+}
