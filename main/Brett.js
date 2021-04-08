@@ -4,10 +4,9 @@ ctx.font = "30px Arial";
 let xForRect = 0;
 let yForRect = 0;
 let width = 4;
-let counter = 0;
+let textValue = 0;
 let matrix = [];
 let textInput=[];
-let listOfWhite=[];
 const valueRect = [];
 let amountOfRects = 0;
 //------------------------------------------------------------
@@ -31,6 +30,12 @@ function twoDimensional(){
             } else if(valueRect[amountOfRects]===3){
                 matrix.push([x,y,1]);
                 ctx.strokeRect(xForRect,yForRect,60,60);
+                if(textInput.length<=textValue){
+                    ctx.fillText("X", xForRect+24, yForRect+40);
+                }else {
+                    ctx.fillText(textInput[textValue], xForRect+24, yForRect+44);
+                }
+                textValue++;
             }
             amountOfRects++;
             xForRect+=60;
@@ -54,6 +59,7 @@ function rotateValues(){
             }else if(matrix[amountOfRects][2]==1){
                 ctx.strokeRect(x,y,60,60);
             }
+
             amountOfRects++;
             x+=60;
             if(j===(width-1)){
