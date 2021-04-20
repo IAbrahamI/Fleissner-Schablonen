@@ -6,82 +6,124 @@ let yForRect = 0;
 let width = 4;
 let textValue = 0;
 let matrix = [];
-let textInput=[];
+
+let TempArray = [];
+let textInput = [];
 const valueRect = [];
 let amountOfRects = 0;
 //------------------------------------------------------------
 // Methode für die Random Erstellung von Schwarze Rectangles
-function addRandomValues(){
-    const amountOfRds = width*width;
-    for(let l=0; l<amountOfRds; l++){
-        const randomNumber = Math.floor(Math.random()*4);
+function addRandomValues() {
+    const amountOfRds = width * width;
+    for (let l = 0; l < amountOfRds; l++) {
+        const randomNumber = Math.floor(Math.random() * 4);
         valueRect.push(randomNumber);
     }
 }
+
 //------------------------------------------------------------
 // Methode um die Schablone zu zeichnen und Werte richtig zu speichern
-function twoDimensional(){
-    for(let x=0;x<width;x++){
-        for(let y=0;y<width;y++){
-            if(valueRect[amountOfRects]===0 || valueRect[amountOfRects]===1 || valueRect[amountOfRects]===2){
-                matrix.push([x,y,0]);
-                ctx.fillRect(xForRect,yForRect,60,60);
-
-            } else if(valueRect[amountOfRects]===3){
-                matrix.push([x,y,1]);
-                ctx.strokeRect(xForRect,yForRect,60,60);
-                if(textInput.length<=textValue){
-                    ctx.fillText("X", xForRect+24, yForRect+40);
-                }else {
-                    ctx.fillText(textInput[textValue], xForRect+24, yForRect+44);
+function threeDimensional() {
+    for (let x = 0; x < width; x++) {
+        let array = [];
+        for (let y = 0; y < width; y++) {
+            if (valueRect[amountOfRects] === 0 || valueRect[amountOfRects] === 1 || valueRect[amountOfRects] === 2) {
+                TempArray = [x, y, 0];
+                ctx.fillRect(xForRect, yForRect, 60, 60);
+                console.log("Black")
+            } else if (valueRect[amountOfRects] === 3) {
+                TempArray = [x, y, 1];
+                ctx.strokeRect(xForRect, yForRect, 60, 60);
+                console.log("White")
+                if (textInput.length <= textValue) {
+                    ctx.fillText("X", xForRect + 24, yForRect + 40);
+                } else {
+                    ctx.fillText(textInput[textValue], xForRect + 24, yForRect + 44);
                 }
                 textValue++;
             }
             amountOfRects++;
-            xForRect+=60;
-            if(y===(width-1)){
-                xForRect=0;
-                yForRect+=60;
+            xForRect += 60;
+            if (y === (width - 1)) {
+                xForRect = 0;
+                yForRect += 60;
             }
+            array.push(TempArray);
         }
+
+        matrix.push(array)
     }
-    amountOfRects=0;
+    console.log(matrix)
+    amountOfRects = 0;
 }
 
 //------------------------------------------------------------
 // Funktion um die Werte zu ersetzten
-function rotateValues(){
-    for(let i=0; i<width; i++){
-        for(let j=0; j<width; j++){
-            ctx.strokeRect(x,y,60,60);
-            if(matrix[amountOfRects][2]==0){
-                ctx.fillRect(x,y,60,60);
-            }else if(matrix[amountOfRects][2]==1){
-                ctx.strokeRect(x,y,60,60);
+let counter = 0;
+function rotateValues() {
+    rotate(matrix)
+    if (counter < 3) {
+        counter++;
+        for (let i = 0; i < width; i++) {
+            for (let j = 0; j < width; j++) {
+                if (matrix[i][j][2] == 0) {
+                    console.log("Black " + matrix[i][j][2])
+                    ctx.fillRect(xForRect, yForRect, 60, 60);
+                } else if (matrix[i][j][2] == 1) {
+                    console.log("White" + matrix[i][j][2])
+                    ctx.strokeRect(xForRect, yForRect, 60, 60);
+                    if (textInput.length <= textValue) {
+                        ctx.fillText("X", xForRect + 24, yForRect + 40);
+                    } else {
+                        ctx.fillText(textInput[textValue], xForRect + 24, yForRect + 44);
+                    }
+                    textValue++;
+                }
+                amountOfRects++;
+                xForRect += 60;
+                if (j === (width - 1)) {
+                    xForRect = 0;
+                    yForRect += 60;
+                }
             }
+        }
+        console.log(matrix)
+    }else{
+        document.getElementById("rotationButton").disabled = true;
+    }
 
-            amountOfRects++;
-            x+=60;
-            if(j===(width-1)){
-                x=0;
-                y+=60;
-            }
+}
+
+//Die mathematische RotationsFunktion
+function rotate(matrix) {
+    const n = matrix.length;
+    const x = Math.floor(n / 2);
+    const y = n - 1;
+    for (let i = 0; i < x; i++) {
+        for (let j = i; j < y - i; j++) {
+            k = matrix[i][j];
+            matrix[i][j] = matrix[y - j][i];
+            matrix[y - j][i] = matrix[y - i][y - j];
+            matrix[y - i][y - j] = matrix[j][y - i]
+            matrix[j][y - i] = k
         }
     }
 }
+
 //------------------------------------------------------------
 // Speichert und zeichnet alle Buchstaben
-function saveValues(){
-    ctx.clearRect(0,0,canvas.width, canvas.height);
+function saveValues() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     const inputValue = document.getElementById('textInput').value;
     textInput = Array.from(inputValue);
-    if(textInput.length>(width*4)){
-        width = width+2;
+    if (textInput.length > (width * 4)) {
+        width = width + 2;
     }
     addRandomValues();
-    twoDimensional();
+    threeDimensional();
 }
+
 //------------------------------------------------------------
-function rotateCanvas(){
+function rotateCanvas() {
     rotateValues();
 }
